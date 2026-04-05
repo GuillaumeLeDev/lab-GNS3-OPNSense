@@ -148,6 +148,45 @@ Cela valide que :
 
 ---
 
+## Routage dynamique OSPF (FRR)
+
+OPNSense intègre FRRouting via le plugin `os-frr` — ce qui permet de configurer OSPF directement depuis l'interface web sans toucher à la ligne de commande.
+
+### Configuration appliquée
+
+- **Plugin** : os-frr installé via System → Firmware → Plugins
+- **Area** : 0.0.0.0 (backbone single-area)
+- **Réseaux annoncés** : 192.168.56.0/24 (LAN) et 192.168.100.0/24 (DMZ)
+- **Interfaces OSPF** : LAN (em0) et DMZ (em2) — WAN exclu volontairement
+
+### Table de routage OSPF — OPNSense
+
+![OSPF Routing Table OPNSense](screenshots/1775401176705_opnRouteTable.png)
+
+OPNSense voit 3 réseaux en Area 0 — 192.168.56.0/24 (LAN), 192.168.100.0/24 (DMZ), et **192.168.2.0/24 appris automatiquement via CHR-1** ✅
+
+### Voisins OSPF — OPNSense
+
+![OSPF Neighbors OPNSense](screenshots/1775401176705_opnRouteNeighbords.png)
+
+OPNSense voit deux voisins en état **Full** : 2.2.2.2 (MikroTik-CHR-2) et 1.1.1.1 (MikroTik-CHR-1).
+
+### Voisins OSPF — MikroTik-CHR-1
+
+![OSPF Neighbors MikroTik](screenshots/1775401176705_routeur-routing-neighbords.png)
+
+CHR-1 voit OPNSense (192.168.56.2) et CHR-2 (192.168.56.10) en état **Full**.
+
+### Table de routage — MikroTik-CHR-1
+
+![IP Route MikroTik](screenshots/1775401176705_Routeur-iproute.png)
+
+La route `192.168.100.0/24` (DMZ OPNSense) est apprise automatiquement via OSPF avec une distance administrative de 110 — aucune route statique configurée.
+
+> **Pourquoi exclure le WAN ?** On ne veut pas annoncer les routes internes vers internet. OSPF reste confiné au réseau interne — c'est une bonne pratique de sécurité.
+
+---
+
 ## Roadmap — Évolutions prévues
 
 - [ ] **Routage dynamique OSPF** — remplacer FRRouting Docker par une image compatible GNS3 (Cisco IOSv ou VyOS) pour implémenter OSPF entre les routeurs
