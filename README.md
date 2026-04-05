@@ -159,7 +159,7 @@ routing ospf interface-template add area=backbone interfaces=ether2
 
 ### Voisins OSPF — OPNSense
 
-![OSPF Neighbors OPNSense](screenshots/1775401176705_opnRouteNeighbords.png)
+![OSPF Neighbors OPNSense](screenshots/opnRouteNeighbords.png)
 
 OPNSense voit deux voisins en état **Full** :
 - **2.2.2.2** (MikroTik-CHR-2) → Full/Backup
@@ -167,19 +167,19 @@ OPNSense voit deux voisins en état **Full** :
 
 ### Table de routage OSPF — OPNSense
 
-![OSPF Routing Table OPNSense](screenshots/1775401176705_opnRouteTable.png)
+![OSPF Routing Table OPNSense](screenshots/opnRouteTable.png)
 
 OPNSense voit 3 réseaux en Area 0 — dont **192.168.2.0/24 appris automatiquement via CHR-1** ✅
 
 ### Voisins OSPF — MikroTik-CHR-1
 
-![OSPF Neighbors MikroTik](screenshots/1775401176705_routeur-routing-neighbords.png)
+![OSPF Neighbors MikroTik](screenshots/routeur-routing-neighbords.png)
 
 CHR-1 voit OPNSense (192.168.56.2) et CHR-2 (192.168.56.10) en état **Full**.
 
 ### Table de routage — MikroTik-CHR-1
 
-![IP Route MikroTik](screenshots/1775401176705_Routeur-iproute.png)
+![IP Route MikroTik](screenshots/Routeur-iproute.png)
 
 La route `192.168.100.0/24` (DMZ OPNSense) est apprise automatiquement via OSPF avec une distance administrative de 110 — **aucune route statique configurée**.
 
